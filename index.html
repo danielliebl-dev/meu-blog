@@ -1,1 +1,952 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Pontualidade | Sistema de Gestão de Atrasos Escolares</title>
+
+    <meta name="description"
+          content="Pontualidade: uma solução digital para registrar atrasos escolares, comunicar professores e facilitar a gestão da escola.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* =========================
+           CABEÇALHO
+        ========================= */
+
+        header {
+            background: linear-gradient(135deg, #123b8d, #2563eb);
+            color: white;
+            padding: 20px 8%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.75;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            background: linear-gradient(135deg, #123b8d, #2563eb);
+            color: white;
+            padding: 100px 8%;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 58px;
+            line-height: 1.05;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #bfdbfe;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin-bottom: 30px;
+            color: #e0e7ff;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #123b8d;
+        }
+
+        .btn-secondary {
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .hero-card {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 35px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-card h3 {
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .hero-card p {
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        /* =========================
+           SEÇÕES
+        ========================= */
+
+        section {
+            padding: 80px 8%;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            color: #123b8d;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: #64748b;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* =========================
+           PROBLEMA
+        ========================= */
+
+        .problem {
+            background: white;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .problem-card {
+            padding: 30px;
+            border-radius: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .problem-card h3 {
+            margin-bottom: 12px;
+            color: #123b8d;
+        }
+
+        .problem-card .icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        /* =========================
+           ANTES E DEPOIS
+        ========================= */
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .comparison-box {
+            padding: 35px;
+            border-radius: 18px;
+        }
+
+        .before {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+        }
+
+        .after {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+        }
+
+        .comparison-box h3 {
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-box ul {
+            padding-left: 20px;
+        }
+
+        .comparison-box li {
+            margin-bottom: 12px;
+        }
+
+        /* =========================
+           FUNCIONAMENTO
+        ========================= */
+
+        .features {
+            background: #f8fafc;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .feature-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #123b8d;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           PERFIS
+        ========================= */
+
+        .roles {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .role {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .role-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .role h3 {
+            color: #123b8d;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           GRÁFICOS
+        ========================= */
+
+        .graphs {
+            background: white;
+        }
+
+        .graph-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .graph-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 30px;
+            background: #f8fafc;
+        }
+
+        .graph-card h3 {
+            margin-bottom: 25px;
+            color: #123b8d;
+        }
+
+        .bar {
+            margin-bottom: 18px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .bar-background {
+            width: 100%;
+            height: 15px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 20px;
+        }
+
+        /* =========================
+           SEGURANÇA
+        ========================= */
+
+        .security {
+            background: #eff6ff;
+        }
+
+        .security-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .security-box ul {
+            margin-top: 20px;
+            padding-left: 25px;
+        }
+
+        .security-box li {
+            margin-bottom: 12px;
+        }
+
+        /* =========================
+           OBJETIVOS
+        ========================= */
+
+        .objectives {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .objective {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .objective h3 {
+            color: #123b8d;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta {
+            background: linear-gradient(135deg, #123b8d, #2563eb);
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+            color: #dbeafe;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* =========================
+           RODAPÉ
+        ========================= */
+
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 35px 8%;
+            text-align: center;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .hero-content,
+            .comparison,
+            .graph-demo {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid,
+            .roles {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .objectives {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 44px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                position: relative;
+            }
+
+            .nav {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            section {
+                padding: 60px 5%;
+            }
+
+            .hero {
+                padding: 70px 5%;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .problem-grid,
+            .feature-grid,
+            .roles {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 30px;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================
+     CABEÇALHO
+========================= -->
+
+<header>
+    <div class="nav">
+
+        <div class="logo">
+            🎓 Pontualidade
+        </div>
+
+        <nav class="nav-links">
+            <a href="#problema">Problema</a>
+            <a href="#solucao">Solução</a>
+            <a href="#funcionalidades">Funcionalidades</a>
+            <a href="#graficos">Gráficos</a>
+            <a href="#contato">Contato</a>
+        </nav>
+
+    </div>
+</header>
+
+
+<!-- =========================
+     CAPA
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div>
+
+            <h1>
+                Uma nova forma de
+                <span>gerenciar a pontualidade escolar.</span>
+            </h1>
+
+            <p>
+                O Pontualidade é uma plataforma criada para modernizar
+                o registro e o acompanhamento de atrasos escolares,
+                substituindo processos manuais por uma solução digital,
+                rápida e organizada.
+            </p>
+
+            <div class="hero-buttons">
+
+                <!-- TROQUE O LINK ABAIXO PELO ENDEREÇO DO SEU SITE -->
+
+                <a
+                    class="btn btn-primary"
+                    href="https://projeto-de-atrasos-online.base44.app"
+                    target="_blank"
+                >
+                    🚀 Acessar o sistema
+                </a>
+
+                <a
+                    class="btn btn-secondary"
+                    href="https://wa.me/5541999232987"
+                >
+                    💬 Quero conhecer
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-card">
+
+            <h3>💡 O objetivo</h3>
+
+            <p>
+                Facilitar o trabalho da equipe escolar,
+                melhorar a comunicação entre pedagogia e professores
+                e permitir que a escola tenha informações organizadas
+                sobre os atrasos dos alunos.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PROBLEMA
+========================= -->
+
+<section class="problem" id="problema">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Qual problema foi identificado?</h2>
+
+            <p>
+                O projeto nasceu a partir de uma situação real observada
+                no ambiente escolar.
+            </p>
+
+        </div>
+
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+
+                <div class="icon">📄</div>
+
+                <h3>Registro manual</h3>
+
+                <p>
+                    O atraso do aluno precisava ser registrado
+                    manualmente, utilizando papel.
+                </p>
+
+            </div>
+
+
+            <div class="problem-card">
+
+                <div class="icon">⏱️</div>
+
+                <h3>Perda de tempo</h3>
+
+                <p>
+                    O processo exigia que diferentes pessoas
+                    participassem do registro e da comunicação.
+                </p>
+
+            </div>
+
+
+            <div class="problem-card">
+
+                <div class="icon">📚</div>
+
+                <h3>Informações espalhadas</h3>
+
+                <p>
+                    O histórico dos atrasos não ficava concentrado
+                    em um único sistema.
+                </p>
+
+            </div>
+
+
+            <div class="problem-card">
+
+                <div class="icon">📢</div>
+
+                <h3>Comunicação</h3>
+
+                <p>
+                    Era necessário melhorar a comunicação entre
+                    a pedagogia e os professores.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ANTES E DEPOIS
+========================= -->
+
+<section id="solucao">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Do problema à solução</h2>
+
+            <p>
+                A ideia foi transformar um processo manual
+                em um fluxo digital simples.
+            </p>
+
+        </div>
+
+
+        <div class="comparison">
+
+            <div class="comparison-box before">
+
+                <h3>❌ Antes</h3>
+
+                <ul>
+
+                    <li>Registro em papel.</li>
+
+                    <li>Processo manual.</li>
+
+                    <li>Comunicação mais lenta.</li>
+
+                    <li>Dificuldade para consultar históricos.</li>
+
+                    <li>Maior possibilidade de perda de informações.</li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="comparison-box after">
+
+                <h3>✅ Com o Pontualidade</h3>
+
+                <ul>
+
+                    <li>Registro digital do atraso.</li>
+
+                    <li>Busca rápida pelo aluno.</li>
+
+                    <li>Informação organizada.</li>
+
+                    <li>Professores podem acompanhar os atrasos.</li>
+
+                    <li>Histórico disponível no sistema.</li>
+
+                    <li>Dados separados por escola.</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FUNCIONALIDADES
+========================= -->
+
+<section class="features" id="funcionalidades">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Como o sistema funciona?</h2>
+
+            <p>
+                A plataforma possui diferentes recursos para
+                atender às necessidades da escola.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">📝</div>
+
+                <h3>Registro de atrasos</h3>
+
+                <p>
+                    A pedagogia pode registrar rapidamente
+                    a chegada de um aluno atrasado.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">🔔</div>
+
+                <h3>Notificações</h3>
+
+                <p>
+                    Professores podem ser informados quando
+                    um novo atraso é registrado.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">🆔</div>
+
+                <h3>Identificação por CGM</h3>
+
+                <p>
+                    O sistema utiliza o CGM para identificar
+                    os alunos de forma organizada.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">📚</div>
+
+                <h3>Turmas</h3>
+
+                <p>
+                    Os alunos podem ser organizados de acordo
+                    com suas respectivas turmas.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">📊</div>
+
+                <h3>Gráficos</h3>
+
+                <p>
+                    A escola pode visualizar informações
+                    sobre atrasos por turma e outros indicadores.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">👥</div>
+
+                <h3>Gestão de usuários</h3>
+
+                <p>
+                    Diferentes perfis possuem diferentes
+                    níveis de acesso ao sistema.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">🏫</div>
+
+                <h3>Várias escolas</h3>
+
+                <p>
+                    A plataforma foi pensada para atender
+                    várias escolas mantendo os dados separados.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">🔐</div>
+
+                <h3>Controle de acesso</h3>
+
+                <p>
+                    Cada usuário acessa somente os recursos
+                    correspondentes ao seu perfil.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PERFIS
+========================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Quem utiliza o sistema?</h2>
+
+            <p>
+                Cada perfil possui funções específicas dentro da plataforma.
+            </p>
+
+        </div>
+
+
+        <div class="roles">
+
+
+            <div class="role">
+
+                <div class="role-icon">👩‍💼</div>
+
+                <h3
